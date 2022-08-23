@@ -806,9 +806,9 @@ async function nextQuestion(goBack, goBackFromResponse, fromDependedOn) {
             $("#page4 .customImgRow .imgRowInner p").append(`${responseHeader}`);
             responseOnGoing = true;
             hasNoResponse = false;
-            // closeResponseTimeout = setTimeout(async () => {
-            //   closeResponse();
-            // }, closeResponseTimeoutCounter);
+            closeResponseTimeout = setTimeout(async () => {
+              closeResponse();
+            }, closeResponseTimeoutCounter);
           }
         } else if (apiQues.answers && apiQues.answers[0].responseBody) {
           $("#page3").css("display", "none");
