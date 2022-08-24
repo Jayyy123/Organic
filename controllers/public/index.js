@@ -126,9 +126,27 @@ app.get("/api/v1/rules", async function (req, res, next) {
   }
 });
 
+// new terminate endpoint
+
+app.get("/api/v1/terminate", async function (req, res, next) {
+  try {
+    //body should have actives list as array
+    const messages = await db.terminate.getAll();
+
+    if (!messages) {
+      return res.status(404).json({ success: false, message: `There are no messages` });
+    }
+
+    return res.status(201).json({ success: true, data: messages[messages.length - 1] });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message || "Something went wrong" });
+  }
+});
+
 app.get("/api/v1/profile-sections", async function (req, res, next) {
   try {
-    //body should have actives lsit as array
+    //body should have actives list as array
     const profileSections = await db.result_profile.getAll();
 
     if (!profileSections) {

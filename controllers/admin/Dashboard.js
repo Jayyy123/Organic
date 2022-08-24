@@ -70,6 +70,14 @@ app.get("/admin/dashboard", SessionService.verifySessionMiddleware(role, "admin"
     _base_url: "/admin/dashboard",
   });
 });
+app.get("/admin/dashboard", SessionService.verifySessionMiddleware(role, "admin"), async function (req, res, next) {
+  const config = await db.configuration.findOne({ where: { id: 1 }, include: [{ model: db.image, as: "image" }] });
+  res.render("admin/Dashboard", {
+    config,
+    get_page_name: () => "Dashboard",
+    _base_url: "/admin/dashboard",
+  });
+});
 
 app.post("/questions/order/save", SessionService.verifySessionMiddleware(role, "admin"), async function (req, res, next) {
   try {

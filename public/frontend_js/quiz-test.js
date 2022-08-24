@@ -1206,12 +1206,12 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
     $("#typeSelection .answerInner").html("");
     $("#typeSelection").css("display", "block");
     currentActiveAnswerType = "typeSelection";
-
+    alert('hereee')
     ques.answers.forEach((val, index) => {
       if (val.answer) {
         $("#typeSelection .answerInner").append(`
           <div class="selectionOptions">
-            <button data-val="${val.answer}" onclick="checkAllergie()" data-id="${val.id}" class="selectionBtns selectionBtn" >${val.answer}</button>
+            <button data-val="${val.answer}" onclick="checkAllergie()" data-id="${val.id}" class="selectionBtns selectionBtn type7" >${val.answer}</button>
           </div>
         `);
       }
@@ -1802,3 +1802,54 @@ function handleNoneOfTheAbove() {
 function handleImageMissing(self) {
   $(self).addClass("image-missing");
 }
+
+
+// - find a way to read the dataset values on the html button element that generated the click
+// - each button should have data-val that contains the label of the option
+// - check if that previous val is equal to one of these values ["Banana", "Olive", "Sunflowers"]
+// - if true -> terminate the quiz
+// - function terminateQuiz should do the following
+//   - the termination process need to display a message to the user with a faded black background that has a message and a counter that when it reachs 0 it redirect to /
+//   - ex: ![Termination screen example](./termination_screen.png/ "Termination screen")
+//   - message and counter should be controlled from admin portal
+//   - create a terminate configuration table with the appropriate fields
+//   - create a tab in admin portal to edit these fields
+//   - create an api to get these configuration and use it here to construct the termination screen
+
+function checkAllergie(){
+  const dataID = $('type7').data('data-id');
+  const dataVal = $('type7').data('data-val');
+  const answers = ["Banana", "Olive", "Sunflowers"];
+
+  const terminateQuiz = () => {
+    $.ajax({
+      url: url_preset + '/api/v1/terminate',
+      method: 'GET'
+    })
+      .then(response => {
+        // console.log('here',response.data.data)
+        $("#terminate-section").css("visibility", "visible");
+        $(".terminate-info").append(`
+          <h3>${response.data.data.message}</h3>
+          <h3 class="countdown">${response.data.data.counter}</h3>
+        `)
+        $(document).ready(() => {
+          const timer = setInterval(() => {
+            const count  = parseInt($('.countdown').html());
+            if(count !== 0){
+              $('.countdown').html(count-1);
+            }else{
+              clearInterval(timer);
+            }
+          },1000);
+        })
+      })
+  }
+  // terminateQuiz();
+
+  answers.forEach(d => {
+    d === dataVal && terminateQuiz();
+  })
+}
+
+// checkAllergie();

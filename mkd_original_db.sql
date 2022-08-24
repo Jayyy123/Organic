@@ -18,6 +18,23 @@ DROP DATABASE IF EXISTS `mkd`;
 CREATE DATABASE IF NOT EXISTS `mkd` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `mkd`;
 
+
+DROP TABLE IF EXISTS `terminate`;
+CREATE TABLE IF NOT EXISTS `terminate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `message` varchar(255) NOT NULL,
+  `counter` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+
+INSERT INTO `terminate` (`id`, `message`,`counter`,`created_at`, `updated_at`) VALUES
+	(1, 'Quiz will Now be Terminated', 10, '2022-04-10 11:07:44', '2022-04-10 11:07:44')
+
+
+
 -- Dumping structure for table mkd.active
 DROP TABLE IF EXISTS `active`;
 CREATE TABLE IF NOT EXISTS `active` (

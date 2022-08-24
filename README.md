@@ -52,7 +52,7 @@ pseudo steps of the function
 - check if that previous val is equal to one of these values ["Banana", "Olive", "Sunflowers"]
 - if true -> terminate the quiz
 - function terminateQuiz should do the following
-  - the termination process need to display a message to the user with a faded black background that has a message and a counter that when it reachs 0 it redirect to /
+  - the termination process need to display a message to the user with a faded black background that has a message and a counter that when it reaches 0 it redirect to /
   - ex: ![Termination screen example](./termination_screen.png/ "Termination screen")
   - message and counter should be controlled from admin portal
   - create a terminate configuration table with the appropriate fields
